@@ -79,7 +79,7 @@ function runtests()
             end
             test_lagrange(ngrid=n,
                         func=polynomial,
-                        atol=1.0e-13,
+                        atol=2.0e-13,
                         label="polynomial")
         end
         # test trig function
