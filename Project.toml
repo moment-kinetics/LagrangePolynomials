@@ -1,0 +1,16 @@
+name = "LagrangePolynomials"
+uuid = "fb83b288-ce1a-45f4-939e-c34c34051e49"
+version = "0.0.0"
+
+[deps]
+FastGaussQuadrature = "442a2c76-b920-505d-bb47-c5924d526838"
+
+[compat]
+julia = "1.9.0"
+
+[extras]
+FastGaussQuadrature = "442a2c76-b920-505d-bb47-c5924d526838"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test", "FastGaussQuadrature"]
