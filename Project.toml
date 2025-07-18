@@ -1,6 +1,6 @@
 name = "LagrangePolynomials"
 uuid = "fb83b288-ce1a-45f4-939e-c34c34051e49"
-version = "0.0.0"
+version = "0.1.0"
 
 [deps]
 FastGaussQuadrature = "442a2c76-b920-505d-bb47-c5924d526838"
