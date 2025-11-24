@@ -20,7 +20,7 @@ function test_lagrange(;ngrid=20::Int64,
     @testset "lagrange_poly" begin
         println("  -- test lagrange_poly ngrid=$(ngrid) type=$(label)")
         x, w = gausslobatto(ngrid)
-        lpoly_data = lagrange_poly_data(x)
+        lpoly_data = LagrangePolyData(x)
         f = Array{Float64,1}(undef,ngrid)
         for i in 1:ngrid
             f[i] = func(x[i])
@@ -47,7 +47,7 @@ function test_lagrange_derivative(;ngrid=20::Int64,
     @testset "lagrange_poly_derivative" begin
         println("  -- test lagrange_poly_derivative ngrid=$(ngrid) type=$(label)")
         x, w = gausslobatto(ngrid)
-        lpoly_data = lagrange_poly_data(x)
+        lpoly_data = LagrangePolyData(x)
         # test function
         f = Array{Float64,1}(undef,ngrid)
         for i in 1:ngrid

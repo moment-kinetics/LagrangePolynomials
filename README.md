@@ -32,7 +32,7 @@ we can use the following code.
 ```
 using LagrangePolynomials:  lagrange_poly,
                             lagrange_poly_derivative,
-                            lagrange_poly_data
+                            LagrangePolyData
 using FastGaussQuadrature: gausslobatto
 
 function test(ngrid)
@@ -41,7 +41,7 @@ function test(ngrid)
     x, w = gausslobatto(ngrid)
 
     # precompute data for interpolation
-    lpoly_data = lagrange_poly_data(x)
+    lpoly_data = LagrangePolyData(x)
 
     # initialise some function to interpolate, here a sine wave
     f = Array{Float64,1}(undef,ngrid)

@@ -7,10 +7,10 @@ module LagrangePolynomials
 
 export lagrange_poly,
     lagrange_poly_derivative,
-    lagrange_poly_data
+    LagrangePolyData
 
 
-struct lagrange_poly_data_base
+struct LagrangePolyDataBase
     # the set of points {x_i, i /= j} for each point x_j in {x_j}
     other_nodes::Array{Float64,1}
     # the set of points {x_i, i /= j,k} for each point x_j in {x_j}
@@ -20,21 +20,21 @@ struct lagrange_poly_data_base
     one_over_denominator::Float64
 end
 
-struct lagrange_poly_data
+struct LagrangePolyData
     # the set of points {x_i} used to construct the interpolant
     x_nodes::Array{Float64,1}
     # precomputed data
-    lpoly_data::Array{lagrange_poly_data_base,1}
+    lpoly_data::Array{LagrangePolyDataBase,1}
     """
     Internal constructor function that takes only `x_nodes` as an argument.
     """
-    function lagrange_poly_data(x_nodes::AbstractArray{Float64,1})
+    function LagrangePolyData(x_nodes::AbstractArray{Float64,1})
         # Avoid using iterators below for maximum readibility
         ngrid = size(x_nodes,1)
         if ngrid < 2
             error("ERROR: LagrangePolynomials requires ngrid = size(x_nodes,1) >= 2")
         end
-        lpoly_data = Array{lagrange_poly_data_base,1}(undef,ngrid)
+        lpoly_data = Array{LagrangePolyDataBase,1}(undef,ngrid)
         for j in 1:ngrid
             other_nodes = Array{Float64,1}(undef,ngrid-1)
             # collect nodes x_i, i /= j
@@ -62,7 +62,7 @@ struct lagrange_poly_data
             for i in j+1:ngrid
                 one_over_denominator /= (x_nodes[j]-x_nodes[i])
             end
-            lpoly_data[j] = lagrange_poly_data_base(other_nodes,
+            lpoly_data[j] = LagrangePolyDataBase(other_nodes,
                                                     other_nodes_derivative,
                                                     one_over_denominator)
         end
@@ -85,7 +85,7 @@ point where this Lagrange polynomial is 1.
 
 `x` is the point to evaluate the Lagrange polynomial at.
 """
-function lagrange_poly(jth_lpoly_data::lagrange_poly_data_base,
+function lagrange_poly(jth_lpoly_data::LagrangePolyDataBase,
                                  x::Float64)
     other_nodes = jth_lpoly_data.other_nodes
     one_over_denominator = jth_lpoly_data.one_over_denominator
@@ -99,7 +99,7 @@ function lagrange_poly(jth_lpoly_data::lagrange_poly_data_base,
 end
 
 """
-    lagrange_poly_derivative(jth_lpoly_data::lagrange_poly_data_base,
+    lagrange_poly_derivative(jth_lpoly_data::LagrangePolyDataBase,
                             x::Float64)
 
 Calculation of the first derivative of a Lagrange polynomial, making use of
@@ -107,7 +107,7 @@ pre-calculated quantities.
 
 `x` is the point to evaluate the Lagrange polynomial at.
 """
-function lagrange_poly_derivative(jth_lpoly_data::lagrange_poly_data_base,
+function lagrange_poly_derivative(jth_lpoly_data::LagrangePolyDataBase,
                                             x::Float64)
     other_nodes = jth_lpoly_data.other_nodes_derivative
     one_over_denominator = jth_lpoly_data.one_over_denominator
